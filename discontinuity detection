@@ -1,0 +1,68 @@
+The pseudocode of the dataset segmentation and screening algorithm is as follows:
+Algorithm 1. C = SS [X, S]
+Input:
+X, a given series
+S, the number of segments to be formed
+Output:
+C, an index set of possible mutation/zooming points
+1: n → Length(X)
+2: L → Floor(n/S)
+3: for all i → to S-1 do
+4:    da(i) → L* (i-1)
+5: end for
+6: da(S) → n+1
+7: for all i → 1 to S-2 do	8:    s_mean(i) → mean(X(da(i): da(i+2) -1))
+9: end for 
+10: k →1
+11: for all i → S-3 do
+12:    Di → s_mean(i+1) – s_mean(i)
+13:    if Di >   then
+14:         c(k) = da(i+1)
+15:         k = k+1
+16:    end if
+17: end for
+18: C→c
+19: return C
+
+
+
+The pseudocode of the ASCC peak recognition algorithm is as follows:
+Algorithm 2. Change-point = Peak recognition [Z, C]	
+Input:
+Z, subsegments that change-points are likely to be covered
+C, an index set
+Output:
+Change-point, the set of change-point location
+1: lc → Length(C)
+2: for all i → 1 to lc do
+3:     for all k → 1 to L do
+4:         cost (i, k) → calculate statistic
+5:     end for
+6:     max, lmax, j0, Dxr, Dxl → 0, cp → 1
+7:     for all j → 1 to L do
+8:         if cost (i, j) > max then
+9:             max → cost (i, j)
+10:              lmax → c(i) - 1 + j
+11:              j0 → j
+12:        end if
+13:    end for	14:    if j0 > 1 then
+15:       for all j → 1 to j0-1
+16:            if cost (i, j) < cost (i, j+1) then
+17:                Dxl → Dxl + 1
+18:            end if 
+19:        end for
+20:    end if 
+21:    if j0 < L
+22:        for all j → j0 to L-1 do
+23:            if cost (i, j) > cost (i, j+1) then
+24:                Dxr → Dxr + 1
+25:            end if
+26:        end for
+27:    end if
+28:    if   then
+29:        Change-point(i)→lmax
+30:    end if
+31: end for
+32: return Change-point
+
+
